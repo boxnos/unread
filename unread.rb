@@ -10,6 +10,7 @@ def usage(status=0)
   puts "Useage: #{$program} command ..."
   puts
   puts "#{$program} list"
+  puts "#{$program} init title"
   puts "#{$program} view title"
   puts "#{$program} add  title page [date]"
 
@@ -63,7 +64,7 @@ def main()
     add()
   when "init"
     check_argv
-    FileUtils.touch(get_filename)
+    FileUtils.touch(get_csv_filename ARGV.shift)
   when "view"
     check_argv
     pp CSV.read(get_csv_filename ARGV.shift)
