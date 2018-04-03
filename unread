@@ -43,11 +43,13 @@ def add()
   page = ARGV.shift
   date = Date.today
 
-  # TODO can't open new book
   table = read_table title
 
-  # TODO search same date and update page
-  table.unshift [date, page]
+  if result = table.find {|d| Date.iso8601(d[0]) == date}
+    result[1] = page
+  else
+    table.unshift [date, page]
+  end
 
   CSV.open(get_csv_filename(title), "w") do |csv|
     table.each do |line|
