@@ -18,7 +18,7 @@ def usage(status=0)
 end
 
 def error(message)
-  puts "#{$program} #{message}"
+  puts "#{$program}: #{message}"
   usage 1
 end
 
