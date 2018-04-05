@@ -76,7 +76,7 @@ def main()
     end
   when "plot"
     check_argv
-    system("./plot.R #{get_csv_filename ARGV.shift}")
+    system("./plot #{get_csv_filename ARGV.shift}")
   else
     error "undefined command"
   end
