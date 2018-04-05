@@ -9,3 +9,5 @@ X11()
 plot(data)
 
 ret <- tkmessageBox(message = "Hit enter to close plot")
+
+# vim: ft=r
