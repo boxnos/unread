@@ -74,6 +74,9 @@ def main()
     Dir.glob("./data/*.csv").each do |file|
       puts File.basename(file, ".csv")
     end
+  when "plot"
+    check_argv
+    system("./plot.R #{get_csv_filename ARGV.shift}")
   else
     error "undefined command"
   end
