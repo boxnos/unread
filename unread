@@ -54,22 +54,16 @@ def add()
 
   table = read_table title
 
-  # Linear search and Insert
-  counter = 0
-  table.length.times do |i|
-    d = Date.iso8601(table[i][0])
-    if d == date
-      table[i][1] = page
-      break
-    elsif date > d
-      table.insert(i, [date.to_s, page])
-      break
-    end
-    counter += 1
+  index = (0...table.size).bsearch do |i|
+   date >= Date.iso8601(table[i][0])
   end
 
-  if counter == table.length
+  if index.nil?
     table.push [date.to_s, page]
+  elsif Date.iso8601(table[index][0]) == date
+    table[index][1] = page
+  else
+      table.insert(index, [date.to_s, page])
   end
 
   CSV.open(get_csv_filename(title), "w") do |csv|
