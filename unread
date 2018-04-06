@@ -46,14 +46,30 @@ def add()
 
   title = ARGV.shift
   page = ARGV.shift
-  date = Date.today
+  if date_s = ARGV.shift
+    date = Date.iso8601(date_s)
+  else
+    date = Date.today()
+  end
 
   table = read_table title
 
-  if result = table.find {|d| Date.iso8601(d[0]) == date}
-    result[1] = page
-  else
-    table.unshift [date, page]
+  # Linear search and Insert
+  counter = 0
+  table.length.times do |i|
+    d = Date.iso8601(table[i][0])
+    if d == date
+      table[i][1] = page
+      break
+    elsif date > d
+      table.insert(i, [date.to_s, page])
+      break
+    end
+    counter += 1
+  end
+
+  if counter == table.length
+    table.push [date.to_s, page]
   end
 
   CSV.open(get_csv_filename(title), "w") do |csv|
