@@ -32,6 +32,11 @@ def get_csv_filename(title)
   "./data/#{title}.csv"
 end
 
+def get_csv_filename_from_argv()
+  check_argv
+  yield get_csv_filename ARGV.shift
+end
+
 def read_table(title)
   CSV.read(get_csv_filename title)
 end
@@ -65,18 +70,21 @@ def main()
   when "add"
     add()
   when "init"
-    check_argv
-    FileUtils.touch(get_csv_filename ARGV.shift)
+    get_csv_filename_from_argv do |filename|
+      FileUtils.touch(filename)
+    end
   when "view"
-    check_argv
-    pp CSV.read(get_csv_filename ARGV.shift)
+    get_csv_filename_from_argv do |filename|
+      pp CSV.read(filename)
+    end
   when "list"
     Dir.glob("./data/*.csv").each do |file|
       puts File.basename(file, ".csv")
     end
   when "plot"
-    check_argv
-    system("./plot #{get_csv_filename ARGV.shift}")
+    get_csv_filename_from_argv do |filename|
+      system("./plot #{filename}")
+    end
   else
     error "undefined command"
   end
