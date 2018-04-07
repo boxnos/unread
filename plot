@@ -5,6 +5,8 @@ library(tcltk2)
 
 data <- read.csv(commandArgs(trailingOnly=TRUE)[1], header=FALSE)
 
+data[,1] = as.Date(data[,1])
+
 X11()
 plot(data)
 
