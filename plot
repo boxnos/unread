@@ -3,7 +3,7 @@
 library(tcltk)
 library(tcltk2)
 
-data <- read.csv(commandArgs(trailingOnly=TRUE)[1], header=FALSE)
+data <- read.csv(commandArgs(trailingOnly=TRUE)[1])
 
 data[,1] = as.Date(data[,1])
 
