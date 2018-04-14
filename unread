@@ -12,6 +12,7 @@ def usage(status=0)
   puts "#{$program} list"
   puts "#{$program} init title"
   puts "#{$program} view title"
+  puts "#{$program} plot title"
   puts "#{$program} add  title page [date]"
 
   exit status
